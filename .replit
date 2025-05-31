@@ -1,0 +1,40 @@
+modules = ["nodejs-20"]
+
+[nix]
+channel = "stable-24_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Discord Bot"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "discord-bot-test"
+
+[[workflows.workflow]]
+name = "Discord Bot"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm install discord.js dotenv && node index.js"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "discord-bot-test"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm init -y && npm install discord.js dotenv && echo \"BOT_TOKEN=test_token_placeholder\" > .env && echo \"CLIENT_ID=test_client_id_placeholder\" >> .env && node index.js"
+
+[deployment]
+run = ["sh", "-c", "npm install discord.js dotenv && node index.js"]
