@@ -97,9 +97,9 @@ client.on("interactionCreate", async (interaction) => {
         try {
             const [char1, char2] = getRandomCharacters(2);
             const response =
-                `🎮 **Team Spin Results:**\n` +
-                `1️⃣ Player 1 – **${char1}**\n` +
-                `2️⃣ Player 2 – **${char2}**\n\n` +
+                `🎮 **Duo Spin Results:**\n` +
+                `1️⃣ LordMHK – **${char1}**\n` +
+                `2️⃣ HoeLander – **${char2}**\n\n` +
                 `Good luck, heroes! 🦸‍♂️`;
             await interaction.reply(response);
         } catch (error) {
@@ -110,10 +110,10 @@ client.on("interactionCreate", async (interaction) => {
         try {
             const [char1, char2, char3] = getRandomCharacters(3);
             const response =
-                `🎮 **Team Spin Results:**\n` +
-                `1️⃣ Player 1 – **${char1}**\n` +
-                `2️⃣ Player 2 – **${char2}**\n` +
-                `3️⃣ Player 3 – **${char3}**\n\n` +
+                `🎮 **Trio Spin Results:**\n` +
+                `1️⃣ DSKicker – **${char1}**\n` +
+                `2️⃣ LordMHK – **${char2}**\n` +
+                `3️⃣ HoeLander – **${char3}**\n\n` +
                 `Let’s go! 🚀`;
             await interaction.reply(response);
         } catch (error) {
