@@ -1,5 +1,5 @@
-import { Client, GatewayIntentBits, SlashCommandBuilder, REST, Routes } from 'discord.js';
-import dotenv from 'dotenv';
+const { Client, GatewayIntentBits, SlashCommandBuilder, REST, Routes } = require('discord.js');
+const dotenv = require('dotenv');
 
 // Load environment variables
 dotenv.config();
@@ -150,7 +150,7 @@ client.login(process.env.BOT_TOKEN).catch(error => {
 });
 
 // Optional: Create a simple HTTP server for health checks (since backend should bind to port 8000)
-import http from 'http';
+const http = require('http');
 
 const server = http.createServer((req, res) => {
     if (req.url === '/health') {
@@ -166,6 +166,6 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(8000, '0.0.0.0', () => {
-    console.log('🌐 Health check server listening on port 8000');
+server.listen(5000, '0.0.0.0', () => {
+    console.log('🌐 Health check server listening on port 5000');
 });

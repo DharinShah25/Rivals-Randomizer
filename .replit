@@ -38,3 +38,7 @@ args = "npm init -y && npm install discord.js dotenv && echo \"BOT_TOKEN=test_to
 
 [deployment]
 run = ["sh", "-c", "npm install discord.js dotenv && node index.js"]
+
+[[ports]]
+localPort = 5000
+externalPort = 80
