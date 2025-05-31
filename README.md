@@ -1,4 +1,4 @@
-# Discord SpinTeam Bot
+# Rivals Randomizer
 
 A Discord bot that randomly assigns Marvel characters to players using slash commands for team formation. Perfect for games like Marvel Rivals or any team-based Marvel game!
 
