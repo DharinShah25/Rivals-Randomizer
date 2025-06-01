@@ -59,5 +59,3 @@ Replace `YOUR_CLIENT_ID` with your actual Client ID.
 ## Deployment
 
 This bot is deployed on [Northflank](https://northflank.com) and stays live 24/7. 
-
-Developed with ❤️ by [Dharin Shah](https://github.com/DharinShah25)
