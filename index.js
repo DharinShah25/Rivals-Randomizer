@@ -100,7 +100,7 @@ client.on("interactionCreate", async (interaction) => {
             const [char1, char2] = getRandomCharacters(2);
             const response =
                 `🎮 **Duo Spin Results:**\n` +
-                `1️⃣ LordMHK – **${char1}**\n` +
+                `1️⃣ LordMHK   – **${char1}**\n` +
                 `2️⃣ HoeLander – **${char2}**\n\n`;
             await interaction.reply(response);
         } catch (error) {
@@ -112,8 +112,8 @@ client.on("interactionCreate", async (interaction) => {
             const [char1, char2, char3] = getRandomCharacters(3);
             const response =
                 `🎮 **Trio Spin Results:**\n` +
-                `1️⃣ DSKicker – **${char1}**\n` +
-                `2️⃣ LordMHK – **${char2}**\n` +
+                `1️⃣ DSKicker  – **${char1}**\n` +
+                `2️⃣ LordMHK   – **${char2}**\n` +
                 `3️⃣ HoeLander – **${char3}**\n\n`;
             await interaction.reply(response);
         } catch (error) {
