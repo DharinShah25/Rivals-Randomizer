@@ -126,17 +126,18 @@ client.on("interactionCreate", async (interaction) => {
         }
     } else if (interaction.commandName === "purge") {
         const amount = interaction.options.getInteger("count");
-
+    
         if (amount < 1 || amount > 100) {
             return interaction.reply({ content: "Please enter a number between 1 and 100.", ephemeral: true });
         }
-
+    
         try {
-            await interaction.channel.bulkDelete(amount, true);
-            await interaction.reply({ content: `🧹 Deleted ${amount} messages.`, ephemeral: true });
+            await interaction.deferReply({ ephemeral: true }); // ⬅️ prevents timeout
+            const deleted = await interaction.channel.bulkDelete(amount, true);
+            await interaction.editReply({ content: `🧹 Deleted ${deleted.size} messages.` });
         } catch (error) {
             console.error("Error in /purge:", error);
-            await interaction.reply({ content: "❌ Failed to delete messages. Do I have permission?", ephemeral: true });
+            await interaction.editReply({ content: "❌ Failed to delete messages. Do I have permission?" });
         }
     }
 });
