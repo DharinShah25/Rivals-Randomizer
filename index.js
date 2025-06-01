@@ -14,7 +14,6 @@ const client = new Client({
 });
 
 const characters = [
-    
     "CAPTAIN AMERICA 🛡️",
     "DOCTOR STRANGE 🛡️",
     "EMMA FROST 🛡️",
@@ -54,7 +53,6 @@ const characters = [
     "MANTIS ❤️‍🩹",
     "ROCKET RACCOON ❤️‍🩹",
     "ULTRON ❤️‍🩹",
-
 ];
 
 function getRandomCharacters(count = 3) {
@@ -66,13 +64,19 @@ async function registerCommands() {
     const commands = [
         new SlashCommandBuilder()
             .setName("spin2")
-            .setDescription("Assigns 2 random Marvel characters for 2 players")
-            .toJSON(),
+            .setDescription("Assigns 2 random Marvel characters for 2 players"),
         new SlashCommandBuilder()
             .setName("spin3")
-            .setDescription("Assigns 3 random Marvel characters for 3 players")
-            .toJSON(),
-    ];
+            .setDescription("Assigns 3 random Marvel characters for 3 players"),
+        new SlashCommandBuilder()
+            .setName("purge")
+            .setDescription("Deletes a number of messages from the channel")
+            .addIntegerOption(option =>
+                option.setName("count")
+                    .setDescription("Number of messages to delete (max 100)")
+                    .setRequired(true)
+            ),
+    ].map(cmd => cmd.toJSON());
 
     const rest = new REST({ version: "10" }).setToken(process.env.BOT_TOKEN);
 
@@ -119,7 +123,21 @@ client.on("interactionCreate", async (interaction) => {
         } catch (error) {
             console.error("Error in /spin3:", error);
             await interaction.reply("Something went wrong with /spin3.");
-            }
+        }
+    } else if (interaction.commandName === "purge") {
+        const amount = interaction.options.getInteger("count");
+
+        if (amount < 1 || amount > 100) {
+            return interaction.reply({ content: "Please enter a number between 1 and 100.", ephemeral: true });
+        }
+
+        try {
+            await interaction.channel.bulkDelete(amount, true);
+            await interaction.reply({ content: `🧹 Deleted ${amount} messages.`, ephemeral: true });
+        } catch (error) {
+            console.error("Error in /purge:", error);
+            await interaction.reply({ content: "❌ Failed to delete messages. Do I have permission?", ephemeral: true });
+        }
     }
 });
 
@@ -156,7 +174,7 @@ const server = http.createServer((req, res) => {
                 status: "healthy",
                 bot: client.isReady() ? "online" : "offline",
                 timestamp: new Date().toISOString(),
-            }),
+            })
         );
     } else {
         res.writeHead(404, { "Content-Type": "text/plain" });
