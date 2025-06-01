@@ -72,6 +72,15 @@ async function registerCommands() {
             .setName("spin3")
             .setDescription("Assigns 3 random Marvel characters for 3 players")
             .toJSON(),
+          new SlashCommandBuilder()
+            .setName('purge')
+            .setDescription('Deletes a number of messages from the channel.')
+            .addIntegerOption(option =>
+              option.setName('count')
+                .setDescription('Number of messages to delete (1–100)')
+                .setRequired(true)
+                )    
+    ].map(command => command.toJSON());
     ];
 
     const rest = new REST({ version: "10" }).setToken(process.env.BOT_TOKEN);
@@ -120,6 +129,22 @@ client.on("interactionCreate", async (interaction) => {
             console.error("Error in /spin3:", error);
             await interaction.reply("Something went wrong with /spin3.");
         }
+    } else if (interaction.commandName === 'purge') {
+          const count = interaction.options.getInteger('count');
+        
+          if (count < 1 || count > 100) {
+            return interaction.reply({ content: 'Please enter a number between 1 and 100.', ephemeral: true });
+          }
+        
+          await interaction.deferReply({ ephemeral: true });
+        
+          try {
+            const deleted = await interaction.channel.bulkDelete(count, true);
+            await interaction.editReply({ content: `🧹 Deleted ${deleted.size} messages.` });
+          } catch (error) {
+            console.error('Purge failed:', error);
+            await interaction.editReply({ content: '❌ I couldn’t delete messages. Do I have the right permissions?' });
+            }
     }
 });
 
