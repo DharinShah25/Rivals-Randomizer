@@ -112,9 +112,9 @@ client.on("interactionCreate", async (interaction) => {
             const [char1, char2, char3] = getRandomCharacters(3);
             const response =
                 `🎮 **Trio Spin Results:**\n` +
-                `1️⃣ DSKicker  – **${char1}**\n` +
-                `2️⃣ LordMHK   – **${char2}**\n` +
-                `3️⃣ HoeLander – **${char3}**\n\n`;
+                `1️⃣ DSKicker\t– **${char1}**\n` +
+                `2️⃣ LordMHK\t– **${char2}**\n` +
+                `3️⃣ HoeLander\t– **${char3}**\n\n`;
             await interaction.reply(response);
         } catch (error) {
             console.error("Error in /spin3:", error);
