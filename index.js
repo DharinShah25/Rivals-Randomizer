@@ -148,7 +148,7 @@ client.on("interactionCreate", async (interaction) => {
                 const healer = healerCharacters[Math.floor(Math.random() * healerCharacters.length)];
                 const player = players[Math.floor(Math.random() * players.length)];
                 const response = `💉 **Healer Assignment:**\n` +
-                                `➡️ **${player}** - **${healer}**`;
+                                `➡️ ${player} - **${healer}**`;
                 await interaction.reply(response);
             } catch (error) {
                 console.error("Error in /healer:", error);
