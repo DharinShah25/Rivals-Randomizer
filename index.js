@@ -13,6 +13,7 @@ const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
 });
 
+const players = ["LordMHK", "HoeLander", "DSKicker"];
 const characters = [
     "CAPTAIN AMERICA 🛡️",
     "DOCTOR STRANGE 🛡️",
@@ -70,7 +71,7 @@ async function registerCommands() {
             .setDescription("Assigns 3 random Marvel characters for 3 players"),
         new SlashCommandBuilder()
             .setName("healer")
-            .setDescription("Assigns 1 random Marvel healer character"),
+            .setDescription("Assigns a random healer to a random player"),
         new SlashCommandBuilder()
             .setName("purge")
             .setDescription("Delete a number of messages from the channel")
@@ -142,15 +143,16 @@ client.on("interactionCreate", async (interaction) => {
             await interaction.editReply({ content: "❌ Failed to delete messages. Do I have permission?" });
         }
     } else if (interaction.commandName === "healer") {
-        try {
-            const healerCharacters = characters.filter(char => char.includes("❤️‍🩹"));
-            const [healer] = getRandomCharacters.call({ characters: healerCharacters }, 1);
-            const response = `💉 **Healer Assigned:**\n🔹 **${healer}**`;
-            await interaction.reply(response);
-        } catch (error) {
-            console.error("Error in /healer:", error);
-            await interaction.reply("Something went wrong with /healer.");
-        }
+            try {
+                const healerCharacters = characters.filter(char => char.includes("❤️‍🩹"));
+                const healer = healerCharacters[Math.floor(Math.random() * healerCharacters.length)];
+                const player = players[Math.floor(Math.random() * players.length)];
+                const response = `💉 **Healer Assignment:**\n🔹 **${player}** gets **${healer}**`;
+                await interaction.reply(response);
+            } catch (error) {
+                console.error("Error in /healer:", error);
+                await interaction.reply("Something went wrong with /healer.");
+                }    
     }
 });
 
