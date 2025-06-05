@@ -95,7 +95,7 @@ const commands = [
     try {
         console.log("📡 Registering slash commands...");
         await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-            body: commands,
+            body: commands.map(cmd => cmd.toJSON()),
         });
         console.log("✅ Slash commands registered.");
     } catch (error) {
