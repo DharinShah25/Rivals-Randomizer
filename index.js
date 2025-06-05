@@ -12,7 +12,18 @@ dotenv.config();
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
 });
-
+const players = ["DSKicker", "LordMHK", "HoeLander"];
+const healers = [
+    "ADAM WARLOCK ❤️‍🩹",
+    "CLOAK & DAGGER ❤️‍🩹",
+    "INVISIBLE WOMAN ❤️‍🩹",
+    "JEFF THE LAND SHARK ❤️‍🩹",
+    "LOKI ❤️‍🩹",
+    "LUNA SNOW ❤️‍🩹",
+    "MANTIS ❤️‍🩹",
+    "ROCKET RACCOON ❤️‍🩹",
+    "ULTRON ❤️‍🩹"
+];
 const characters = [
     "CAPTAIN AMERICA 🛡️",
     "DOCTOR STRANGE 🛡️",
@@ -68,6 +79,9 @@ const commands = [
     new SlashCommandBuilder()
         .setName("spin3")
         .setDescription("Assigns 3 random Marvel characters for 3 players"),
+    new SlashCommandBuilder()
+        .setName("healer")
+        .setDescription("Assigns a random healer to each player"),
     new SlashCommandBuilder()
         .setName("purge")
         .setDescription("Delete a number of messages from the channel")
@@ -137,7 +151,18 @@ client.on("interactionCreate", async (interaction) => {
             console.error("Error in /purge:", error);
             await interaction.editReply({ content: "❌ Failed to delete messages. Do I have permission?" });
         }
+    } else if (interaction.commandName === "healer") {
+        try {
+            const randomPlayer = players[Math.floor(Math.random() * players.length)];
+            const randomHealer = healers[Math.floor(Math.random() * healers.length)];
+            const response = `🩺 **Healer Swap:**\n🔁 ${randomPlayer} → **${randomHealer}**`;
+            await interaction.reply(response);
+        } catch (error) {
+            console.error("Error in /healer:", error);
+            await interaction.reply("Something went wrong with /healer.");
+            }
     }
+}
 });
 
 client.on("error", (error) => console.error("Client error:", error));
