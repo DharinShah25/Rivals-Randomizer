@@ -70,35 +70,20 @@ async function registerCommands() {
             .setDescription("Assigns 3 random Marvel characters for 3 players"),
         new SlashCommandBuilder()
             .setName("purge")
-            .setDescription("Deletes a number of messages from the channel")
+            .setDescription("Delete a number of messages from the channel")
             .addIntegerOption(option =>
                 option.setName("count")
-                    .setDescription("Number of messages to delete (max 100)")
-                    .setRequired(true)
-            ),
-    ].map(cmd => cmd.toJSON());
+                    .setDescription("Number of messages to delete (1–100)")
+                    .setRequired(true)),
+        // add healer command here if needed
+    ];
 
-const commands = [
-    new SlashCommandBuilder()
-        .setName("spin2")
-        .setDescription("Assigns 2 random Marvel characters for 2 players"),
-    new SlashCommandBuilder()
-        .setName("spin3")
-        .setDescription("Assigns 3 random Marvel characters for 3 players"),
-    new SlashCommandBuilder()
-        .setName("purge")
-        .setDescription("Delete a number of messages from the channel")
-        .addIntegerOption(option =>
-            option.setName("count")
-                .setDescription("Number of messages to delete (1–100)")
-                .setRequired(true)),
-];
     const rest = new REST({ version: "10" }).setToken(process.env.BOT_TOKEN);
 
     try {
         console.log("📡 Registering slash commands...");
         await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-            body: commands,
+            body: commands.map(cmd => cmd.toJSON()),
         });
         console.log("✅ Slash commands registered.");
     } catch (error) {
