@@ -1,4 +1,4 @@
-const {
+const {More actions
     Client,
     GatewayIntentBits,
     SlashCommandBuilder,
@@ -12,18 +12,7 @@ dotenv.config();
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
 });
-const players = ["DSKicker", "LordMHK", "HoeLander"];
-const healers = [
-    "ADAM WARLOCK ❤️‍🩹",
-    "CLOAK & DAGGER ❤️‍🩹",
-    "INVISIBLE WOMAN ❤️‍🩹",
-    "JEFF THE LAND SHARK ❤️‍🩹",
-    "LOKI ❤️‍🩹",
-    "LUNA SNOW ❤️‍🩹",
-    "MANTIS ❤️‍🩹",
-    "ROCKET RACCOON ❤️‍🩹",
-    "ULTRON ❤️‍🩹"
-];
+
 const characters = [
     "CAPTAIN AMERICA 🛡️",
     "DOCTOR STRANGE 🛡️",
@@ -72,6 +61,23 @@ function getRandomCharacters(count = 3) {
 }
 
 async function registerCommands() {
+    const commands = [
+        new SlashCommandBuilder()
+            .setName("spin2")
+            .setDescription("Assigns 2 random Marvel characters for 2 players"),
+        new SlashCommandBuilder()
+            .setName("spin3")
+            .setDescription("Assigns 3 random Marvel characters for 3 players"),
+        new SlashCommandBuilder()
+            .setName("purge")
+            .setDescription("Deletes a number of messages from the channel")
+            .addIntegerOption(option =>
+                option.setName("count")
+                    .setDescription("Number of messages to delete (max 100)")
+                    .setRequired(true)
+            ),
+    ].map(cmd => cmd.toJSON());
+
 const commands = [
     new SlashCommandBuilder()
         .setName("spin2")
@@ -79,9 +85,6 @@ const commands = [
     new SlashCommandBuilder()
         .setName("spin3")
         .setDescription("Assigns 3 random Marvel characters for 3 players"),
-    new SlashCommandBuilder()
-        .setName("healer")
-        .setDescription("Assigns a random healer to each player"),
     new SlashCommandBuilder()
         .setName("purge")
         .setDescription("Delete a number of messages from the channel")
@@ -95,7 +98,7 @@ const commands = [
     try {
         console.log("📡 Registering slash commands...");
         await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-            body: commands.map(cmd => cmd.toJSON()),
+            body: commands,
         });
         console.log("✅ Slash commands registered.");
     } catch (error) {
@@ -138,11 +141,11 @@ client.on("interactionCreate", async (interaction) => {
         }
     } else if (interaction.commandName === "purge") {
         const amount = interaction.options.getInteger("count");
-    
+
         if (amount < 1 || amount > 100) {
             return interaction.reply({ content: "Please enter a number between 1 and 100.", ephemeral: true });
         }
-    
+
         try {
             await interaction.deferReply({ ephemeral: true }); // ⬅️ prevents timeout
             const deleted = await interaction.channel.bulkDelete(amount, true);
@@ -151,18 +154,7 @@ client.on("interactionCreate", async (interaction) => {
             console.error("Error in /purge:", error);
             await interaction.editReply({ content: "❌ Failed to delete messages. Do I have permission?" });
         }
-    } else if (interaction.commandName === "healer") {
-        try {
-            const randomPlayer = players[Math.floor(Math.random() * players.length)];
-            const randomHealer = healers[Math.floor(Math.random() * healers.length)];
-            const response = `🩺 **Healer Swap:**\n🔁 ${randomPlayer} → **${randomHealer}**`;
-            await interaction.reply(response);
-        } catch (error) {
-            console.error("Error in /healer:", error);
-            await interaction.reply("Something went wrong with /healer.");
-            }
     }
-}
 });
 
 client.on("error", (error) => console.error("Client error:", error));
