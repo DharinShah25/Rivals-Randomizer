@@ -147,7 +147,7 @@ client.on("interactionCreate", async (interaction) => {
                 const healerCharacters = characters.filter(char => char.includes("❤️‍🩹"));
                 const healer = healerCharacters[Math.floor(Math.random() * healerCharacters.length)];
                 const player = players[Math.floor(Math.random() * players.length)];
-                const response = `💉 **Healer Assignment:**\n` +
+                const response = `💉 **Healer Spin:**\n` +
                                 `➡️ ${player} - **${healer}**`;
                 await interaction.reply(response);
             } catch (error) {
