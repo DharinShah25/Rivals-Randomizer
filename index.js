@@ -69,13 +69,15 @@ async function registerCommands() {
             .setName("spin3")
             .setDescription("Assigns 3 random Marvel characters for 3 players"),
         new SlashCommandBuilder()
+            .setName("healer")
+            .setDescription("Assigns 1 random Marvel healer character"),
+        new SlashCommandBuilder()
             .setName("purge")
             .setDescription("Delete a number of messages from the channel")
             .addIntegerOption(option =>
                 option.setName("count")
                     .setDescription("Number of messages to delete (1–100)")
                     .setRequired(true)),
-        // add healer command here if needed
     ];
 
     const rest = new REST({ version: "10" }).setToken(process.env.BOT_TOKEN);
@@ -138,6 +140,16 @@ client.on("interactionCreate", async (interaction) => {
         } catch (error) {
             console.error("Error in /purge:", error);
             await interaction.editReply({ content: "❌ Failed to delete messages. Do I have permission?" });
+        }
+    } else if (interaction.commandName === "healer") {
+        try {
+            const healerCharacters = characters.filter(char => char.includes("❤️‍🩹"));
+            const [healer] = getRandomCharacters.call({ characters: healerCharacters }, 1);
+            const response = `💉 **Healer Assigned:**\n🔹 **${healer}**`;
+            await interaction.reply(response);
+        } catch (error) {
+            console.error("Error in /healer:", error);
+            await interaction.reply("Something went wrong with /healer.");
         }
     }
 });
