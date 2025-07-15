@@ -45,6 +45,8 @@ const characters = [
     "THE PUNISHER ⚔️",
     "WINTER SOLDIER ⚔️",
     "WOLVERINE ⚔️",
+    "PHOENIX ⚔️",
+    "BLADE ⚔️",
     "ADAM WARLOCK ❤️‍🩹",
     "CLOAK & DAGGER ❤️‍🩹",
     "INVISIBLE WOMAN ❤️‍🩹",
