@@ -25,6 +25,7 @@ const characters = [
     "THE THING 🛡️",
     "THOR 🛡️",
     "VENOM 🛡️",
+    "ROGUE 🛡️",
     "BLACK PANTHER ⚔️",
     "BLACK WIDOW ⚔️",
     "HAWKEYE ⚔️",
@@ -47,6 +48,7 @@ const characters = [
     "WOLVERINE ⚔️",
     "PHOENIX ⚔️",
     "BLADE ⚔️",
+    "DAREDEVIL ⚔️",
     "ADAM WARLOCK ❤️‍🩹",
     "CLOAK & DAGGER ❤️‍🩹",
     "INVISIBLE WOMAN ❤️‍🩹",
@@ -56,6 +58,7 @@ const characters = [
     "MANTIS ❤️‍🩹",
     "ROCKET RACCOON ❤️‍🩹",
     "ULTRON ❤️‍🩹",
+    "GAMBIT ❤️‍🩹",
 ];
 
 function getRandomCharacters(count = 3) {
